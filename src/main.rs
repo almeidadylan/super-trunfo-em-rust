@@ -1,3 +1,7 @@
+mod screen;
+
+use screen::menu::show_menu;
+
 fn main() {
-    println!("Hello, world!");
+    show_menu();
 }
