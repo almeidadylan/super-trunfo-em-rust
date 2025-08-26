@@ -1,8 +1,8 @@
-use crate::screen::{
-    basic_operations::clear_screen, read::read_int_data
-};
+use crate::{models::client::Client, screen::{
+    basic_operations::clear_screen, client_services::*, read::read_int_data
+}};
 
-pub fn show_menu () {
+pub fn show_menu (client: Client) {
     loop {
         clear_screen();
         println!("\n\
@@ -11,7 +11,7 @@ pub fn show_menu () {
         1 - Cadastrar Carta \n\
         2 - Alterar Carta \n\
         3 - Excluir uma carta \n\
-        4 - mostrar todas as cartas \n\
+        4 - Mostrar todas as cartas \n\
         ");
 
         let option = read_int_data();
@@ -21,7 +21,7 @@ pub fn show_menu () {
                 println!("Finalizando ...");
                 return;
             },
-            1 => println!("Opção 1"),
+            1 => create_client(client),
             2 => println!("Opção 2"),
             3 => println!("Opção 3"),
             4 => println!("Opção 4"),

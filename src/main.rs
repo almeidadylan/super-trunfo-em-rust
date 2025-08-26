@@ -1,7 +1,10 @@
 mod screen;
+mod models;
 
 use screen::menu::show_menu;
+use models::client::Client;
 
 fn main() {
-    show_menu();
+    let mut client: Vec<Client> = Vec::new();
+    show_menu(client);
 }
