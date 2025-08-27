@@ -1,8 +1,8 @@
-use crate::{models::client::Client, screen::{
-    basic_operations::clear_screen, client_services::*, read::read_int_data
+use crate::{models::card::Card, screen::{
+    basic_operations::clear_screen, card_services::*, read::read_int_data
 }};
 
-pub fn show_menu (client: Client) {
+pub fn show_menu (deck: &mut Vec<Card>) {
     loop {
         clear_screen();
         println!("\n\
@@ -21,10 +21,10 @@ pub fn show_menu (client: Client) {
                 println!("Finalizando ...");
                 return;
             },
-            1 => create_client(client),
+            1 => create_client(deck),
             2 => println!("Opção 2"),
             3 => println!("Opção 3"),
-            4 => println!("Opção 4"),
+            4 => show_all_cards(deck),
             _ => println!("Opção inválida"),
         }
     }
