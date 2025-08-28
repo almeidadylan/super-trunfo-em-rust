@@ -40,7 +40,18 @@ pub fn create_client (deck: &mut Vec<Card>) {
     wait(2);
 }
 
+
+
 pub fn show_all_cards (deck: &Vec<Card>) {
-    println!("{:?}", deck);
-    wait(2);
+   loop {
+        clear_screen();
+       println!("{:?}", deck);
+       println!();
+       println!(" Digite 'q' para voltar ao menu principal ");
+       let input = read_string_data();
+       if input == String::from("q") {
+          break;
+       }
+       //wait(2);
+   }
 }
