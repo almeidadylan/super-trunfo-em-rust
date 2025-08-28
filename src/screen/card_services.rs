@@ -40,18 +40,40 @@ pub fn create_client (deck: &mut Vec<Card>) {
     wait(2);
 }
 
+pub fn show_card(card: &Card) {
+    println!("\
+        ID: {}\n\
+        Nome: {}\n\
+        Código: {}\n\
+        Altura: {}\n\
+        Comprimento: {}\n\
+        Peso: {}\n\
+        Velocidade: {}\n\
+        Instinto Assassino: {}
+    ", card.id, card.name, card.code, card.height, card.length, card.weight, card.speed, card.killer_instinct);
+}
 
 
 pub fn show_all_cards (deck: &Vec<Card>) {
    loop {
         clear_screen();
-       println!("{:?}", deck);
-       println!();
-       println!(" Digite 'q' para voltar ao menu principal ");
+
+        println!(" Digite 'q' para voltar ao menu principal ");
+        println!();
+        println!("{}", "-".to_string().repeat(40));
+
+        for card_value in deck {
+            show_card(card_value);
+            println!("{}", "-".to_string().repeat(40));
+        }
+
+        println!();
+        println!(" Digite 'q' para voltar ao menu principal ");
+
        let input = read_string_data();
+       
        if input == String::from("q") {
           break;
        }
-       //wait(2);
    }
 }
