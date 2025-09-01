@@ -15,6 +15,7 @@ use crate::{
 }*/
 //#[derive(Debug)]
 
+// Pega os dados da carta via input do usuario
 fn enter_card_data (card: &mut Card) {
     println!("Digite o nome do animal: ");
     card.name = read_string_data();
@@ -38,6 +39,7 @@ fn enter_card_data (card: &mut Card) {
     card.killer_instinct = (read_int_data()) as u8;
 }
 
+// cria a carta usando os dados de input
 pub fn create_card(deck: &mut Vec<Card>) {
 
     let mut card = Card {
@@ -58,6 +60,7 @@ pub fn create_card(deck: &mut Vec<Card>) {
     wait(2);
 }
 
+// verificar se a carta existe
 fn there_are_no_cards(deck: &[Card]) -> bool {
     if deck.len() == 0 {
         println!("Não existem cartas cadastradas");
@@ -67,15 +70,16 @@ fn there_are_no_cards(deck: &[Card]) -> bool {
     return false;
 }
 
+// mostra a carta
 fn show_card(card: &Card) {
     println!(
         "\
         ID: {}\n\
         Nome: {}\n\
         Código: {}\n\
-        Altura: {:.2}m\n\
-        Comprimento: {:.2}m\n\
-        Peso: {:.3}kg\n\
+        Altura: {:.2} m\n\
+        Comprimento: {:.2} m\n\
+        Peso: {:.3} kg\n\
         Velocidade: {}\n\
         Instinto Assassino: {}
     ",
@@ -90,6 +94,7 @@ fn show_card(card: &Card) {
     );
 }
 
+// mostra todas as cartas
 pub fn show_all_cards(deck: &Vec<Card>) {
     if there_are_no_cards(deck) {
         return;
@@ -112,4 +117,43 @@ pub fn show_all_cards(deck: &Vec<Card>) {
     if input == String::from("q") {
         return;
     }
+}
+
+
+fn get_card_id() -> usize {
+    clear_screen();
+    println!("Digite o id da carta");
+    read_int_data()
+}
+
+
+pub fn change_card (deck: &mut Vec<Card>) {
+    clear_screen();
+
+    if there_are_no_cards(deck) {
+        return;
+    }
+
+    let id = get_card_id(); 
+    if let Some( ( index, card ) ) = search_client_by_id(deck, id){
+        println!("{}", "-".to_string().repeat(40));
+        println!("Alterando o cliente");
+        println!("{}", "-".to_string().repeat(40));
+
+        show_card(card);
+        println!("{}", "-".to_string().repeat(40));
+
+        enter_card_data(&mut deck[index] );
+        clear_screen();
+        println!("Cliente alterado com sucesso");
+    } else {
+        clear_screen();
+        println!("Carta não encontrada.");
+        wait(2);
+    }
+}
+
+
+fn search_client_by_id ( deck: &Vec<Card>, id: usize ) -> Option<( usize, &Card )>{
+    deck.iter().enumerate().find( |(_, card) | card.id == id )
 }

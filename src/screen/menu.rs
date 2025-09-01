@@ -26,7 +26,7 @@ pub fn show_menu (deck: &mut Vec<Card>) {
                 return;
             },
             1 => create_card(deck),
-            2 => println!("Opção 2"),
+            2 => change_card(deck),
             3 => println!("Opção 3"),
             4 => show_all_cards(deck),
             _ => println!("Opção inválida"),
