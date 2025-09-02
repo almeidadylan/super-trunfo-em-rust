@@ -3,16 +3,6 @@ use crate::{
     screen::{basic_operations::*, read::{read_int_data, read_string_data, read_float_data}},
 };
 
-/*fn enter_customer_data (client: &mut Client) {
-    println!("Digite o nome");
-    client.name = read_string_data();
-
-    println!("Digite o cpf");
-    client.cpf = read_string_data();
-
-    println!("Digite o endereço");
-    client.address = read_string_data();
-}*/
 //#[derive(Debug)]
 
 // Pega os dados da carta via input do usuario
@@ -70,7 +60,7 @@ fn there_are_no_cards(deck: &[Card]) -> bool {
     return false;
 }
 
-// mostra a carta
+// mostra os valores de uma carta
 fn show_card(card: &Card) {
     println!(
         "\
@@ -119,7 +109,7 @@ pub fn show_all_cards(deck: &Vec<Card>) {
     }
 }
 
-
+// Pega o input do id que o usuario quer alterar
 fn get_card_id() -> usize {
     clear_screen();
     println!("Digite o id da carta");
@@ -127,6 +117,7 @@ fn get_card_id() -> usize {
 }
 
 
+// Altera os valores da carta
 pub fn change_card (deck: &mut Vec<Card>) {
     clear_screen();
 
@@ -135,7 +126,7 @@ pub fn change_card (deck: &mut Vec<Card>) {
     }
 
     let id = get_card_id(); 
-    if let Some( ( index, card ) ) = search_client_by_id(deck, id){
+    if let Some( ( index, card ) ) = search_card_by_id(deck, id){
         println!("{}", "-".to_string().repeat(40));
         println!("Alterando o cliente");
         println!("{}", "-".to_string().repeat(40));
@@ -153,7 +144,50 @@ pub fn change_card (deck: &mut Vec<Card>) {
     }
 }
 
-
-fn search_client_by_id ( deck: &Vec<Card>, id: usize ) -> Option<( usize, &Card )>{
+// procura o id da carta no banco de dados
+fn search_card_by_id ( deck: &Vec<Card>, id: usize ) -> Option<( usize, &Card )>{
     deck.iter().enumerate().find( |(_, card) | card.id == id )
+}
+
+pub fn delete_card (deck: &mut Vec<Card>) {
+    clear_screen();
+
+    if there_are_no_cards(deck) {
+        return;
+    }
+
+    let id = get_card_id();
+    if let Some( (index, card) ) = search_card_by_id(deck, id) {
+        println!("{}", "-".to_string().repeat(40));
+        println!("Confirma a exclusão do cliente abaixo?");
+        println!("{}", "-".to_string().repeat(40));
+
+        show_card(card);
+
+        println!("{}", "-".to_string().repeat(40));
+        println!("s - Sim\nn - Não");
+        let option = read_string_data();
+
+        if option == "s" {
+            deck.remove(index);
+
+            clear_screen();
+            println!("Cliente exluído com sucesso");
+            wait(2);
+        } 
+        if option == "n" {
+            clear_screen();
+            println!("Você escolheu não excluir a carta");
+            wait(2);
+        }
+        else {
+            clear_screen();
+            println!("Você digitou uma opção inválida");
+            wait(2);
+        }
+    } else {
+        clear_screen();
+        println!("Cliente não encontrado!");
+        wait(2);
+    }
 }
